@@ -1,5 +1,5 @@
 export const state = () => ({
-    fooddata: [{
+    foodData: [{
         name: "Taco bout Eating Tacos",
         deliveryTime: 25,
         meal: ["lunch", "dinner"],
