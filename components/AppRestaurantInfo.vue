@@ -1,6 +1,6 @@
 <template>
   <section class="restaurantinfo">
-    <div v-for="store in foodData" :key="store.id">
+    <div v-for="store in filteredFoodData" :key="store.id">
       <h2>{{ store.name }}</h2>
       <p>Delivery Time {{ store.deliveryTime }}</p>
       <p>Rating {{ store.rating }}</p>
@@ -14,13 +14,13 @@
           class="items"
           :style="`background: url(${menuItem.img}) no-repeat center center`"
         >
-            <div class="iteminfo">
-                <div>
-                    <h4>{{ menuItem.item }}</h4>
-                    <p>{{ priceFormatting(menuItem.price) }}</p>
-                </div>
-                <button class="ghost">View Item</button>
+          <div class="iteminfo">
+            <div>
+              <h4>{{ menuItem.item }}</h4>
+              <p>{{ priceFormatting(menuItem.price) }}</p>
             </div>
+            <button class="ghost">View Item</button>
+          </div>
         </div>
       </div>
     </div>
@@ -31,13 +31,24 @@
 import { mapState } from "vuex";
 
 export default {
+  props: {
+    filterVal: {
+      type: String,
+      default: "",
+    },
+  },
   computed: {
     ...mapState(["foodData"]),
+    filteredFoodData() {
+      return this.foodData.filter((restaurant) =>
+        restaurant.name.toLowerCase().includes(this.filterVal)
+      );
+    },
   },
   methods: {
-      priceFormatting(price) {
-          return `$${price.toFixed(2)}`
-      }
-  }
+    priceFormatting(price) {
+      return `$${price.toFixed(2)}`;
+    },
+  },
 };
 </script>
