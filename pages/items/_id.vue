@@ -9,8 +9,8 @@
       <h3>Price: {{ `$${currentItem.price.toFixed(2)}` }}</h3>
       <div class="quantity">
         <input type="number" min="1" v-model="count" />
-        <button class="primary" @click="addToCard">
-          Add to Cart - {{ combinedPrice }}
+        <button class="primary" @click="add">
+          Add to Cart - {{ `$${combinedPrice}` }}
         </button>
       </div>
       <fieldset v-if="currentItem.options">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   data() {
@@ -76,12 +76,15 @@ export default {
     },
     combinedPrice() {
       let total = this.count * this.currentItem.price;
-      return `$${total.toFixed(2)}`;
+      return total.toFixed(2);
     },
   },
 
   methods: {
-    addToCard() {
+    ...mapActions([
+      "addToCard",
+    ]),
+    add() {
       let formOutput = {
         item: this.currentItem.item,
         count: this.count,
@@ -89,7 +92,7 @@ export default {
         addOns: this.selectedAddons,
         combinedPrice: this.combinedPrice,
       };
-
+      this.addToCard(formOutput);
       this.cardSubmitted = true;
     },
   },

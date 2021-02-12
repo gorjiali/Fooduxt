@@ -1,14 +1,17 @@
-export const state = () => ({
-  foodData: []
-})
+import { v4 as uuidv4 } from 'uuid';
 
-export const getters = {
-  
-}
+export const state = () => ({
+  foodData: [],
+  cardItems: []
+})
 
 export const mutations = {
   setFoodData: (state, foodData) => {
     state.foodData = foodData
+  },
+
+  setCardItem: (state, cardItem) => {
+    state.cardItems.push(cardItem);
   }
 }
 
@@ -30,5 +33,9 @@ export const actions = {
     catch (err) {
       console.log(err);
     }
+  },
+
+  addToCard({ commit }, item) {
+    commit('setCardItem', { ...item, id: uuidv4() })
   }
 }
