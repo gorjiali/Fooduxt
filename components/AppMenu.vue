@@ -1,15 +1,8 @@
 <template>
   <nav>
     <ul>
-      <li><nuxt-link to="/">Home</nuxt-link></li>
+      <li><nuxt-link to="/"><app-logo /></nuxt-link></li>
       <li><nuxt-link to="/restaurants">Restaurants</nuxt-link></li>
     </ul>
   </nav>
 </template>
-
-<script>
-export default {};
-</script>
-
-<style lang="scss" scoped>
-</style>
