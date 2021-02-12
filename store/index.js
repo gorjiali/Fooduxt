@@ -2,11 +2,9 @@ export const state = () => ({
   foodData: []
 })
 
-// export const getters = {
-//     getterValue: state => {
-//         return state.value
-//     }
-// }
+export const getters = {
+  
+}
 
 export const mutations = {
   setFoodData: (state, foodData) => {
