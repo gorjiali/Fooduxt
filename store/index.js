@@ -2,16 +2,23 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const state = () => ({
   foodData: [],
-  cardItems: []
+  cart: []
 })
+
+export const getters = {
+  totalPrice(state) {
+    if (!state.cart.length) return 0;
+    return state.cart.reduce((acc, currentVal) => acc + +currentVal.combinedPrice, 0);
+  }
+}
 
 export const mutations = {
   setFoodData: (state, foodData) => {
     state.foodData = foodData
   },
 
-  setCardItem: (state, cardItem) => {
-    state.cardItems.push(cardItem);
+  setCartItem: (state, cartItem) => {
+    state.cart.push(cartItem);
   }
 }
 
@@ -35,7 +42,7 @@ export const actions = {
     }
   },
 
-  addToCard({ commit }, item) {
-    commit('setCardItem', { ...item, id: uuidv4() })
+  addToCart({ commit }, item) {
+    commit('setCartItem', { ...item, id: uuidv4() })
   }
 }

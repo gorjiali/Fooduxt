@@ -82,7 +82,7 @@ export default {
 
   methods: {
     ...mapActions([
-      "addToCard",
+      "addToCart",
     ]),
     add() {
       let formOutput = {
@@ -92,7 +92,7 @@ export default {
         addOns: this.selectedAddons,
         combinedPrice: this.combinedPrice,
       };
-      this.addToCard(formOutput);
+      this.addToCart(formOutput);
       this.cardSubmitted = true;
     },
   },
