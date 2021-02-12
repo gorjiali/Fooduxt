@@ -4,7 +4,7 @@
     <section v-if="!cart.length" class="emptycart">
       <app-hungry-man />
       <h2>Your cart is empty!</h2>
-      <nuxt-link to="/">
+      <nuxt-link exact to="/">
         <button class="primary">Fill it up!</button>
       </nuxt-link>
     </section>
