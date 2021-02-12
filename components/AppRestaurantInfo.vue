@@ -12,7 +12,7 @@
           v-for="menuItem in store.menu"
           :key="menuItem.id"
           class="items"
-          :style="`background: url(${menuItem.img}) no-repeat center center`"
+          :style="`background: url(/${menuItem.img}) no-repeat center center`"
         >
           <div class="iteminfo">
             <div>
