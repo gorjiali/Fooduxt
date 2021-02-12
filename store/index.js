@@ -8,7 +8,11 @@ export const state = () => ({
 export const getters = {
   totalPrice(state) {
     if (!state.cart.length) return 0;
-    return state.cart.reduce((acc, currentVal) => acc + +currentVal.combinedPrice, 0);
+    return state.cart.reduce((acc, currentVal) => acc + +currentVal.combinedPrice, 0).toFixed(2);
+  },
+
+  ordersCount(state) {
+    return state.cart.length;
   }
 }
 
