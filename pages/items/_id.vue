@@ -21,7 +21,7 @@
             name="option"
             :id="option"
             :value="option"
-            v-model="selectedOption"
+            v-model="$v.selectedOption.$model"
           />
           <label :for="option">{{ option }}</label>
         </div>
@@ -34,14 +34,17 @@
             name="addon"
             :id="addOn"
             :value="addOn"
-            v-model="selectedAddons"
+            v-model="$v.selectedAddons.$model"
           />
           <label :for="addOn">{{ addOn }}</label>
         </div>
       </fieldset>
-      <app-toast v-if="cardSubmitted">
-        Order submitted <br />
-        Checkout more <nuxt-link to="/restaurants">restaurants</nuxt-link>!
+      <app-toast v-if="cardSubmitted || validationError">
+        <div v-if="cardSubmitted">
+          Order submitted <br />
+          Checkout more <nuxt-link to="/restaurants">restaurants</nuxt-link>!
+        </div>
+        <div v-else>Please select options<br/> and addons before continuing!</div>
       </app-toast>
     </section>
     <section class="options">
@@ -53,6 +56,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -62,8 +66,19 @@ export default {
       selectedAddons: [],
       selectedOption: "",
       cardSubmitted: false,
+      validationError: false,
     };
   },
+
+  validations: {
+    selectedAddons: {
+      required,
+    },
+    selectedOption: {
+      required,
+    },
+  },
+
   computed: {
     ...mapState(["foodData"]),
     currentItem() {
@@ -81,10 +96,14 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      "addToCart",
-    ]),
+    ...mapActions(["addToCart"]),
     add() {
+      let addOnError = this.$v.selectedAddons.$invalid;
+      let optionError = this.currentItem.options ? this.$v.selectedOption.$invalid : false;
+      if (addOnError || optionError) {
+        this.validationError = true;
+        return;
+      }
       let formOutput = {
         item: this.currentItem.item,
         count: this.count,
